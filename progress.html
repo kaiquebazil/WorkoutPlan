@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Progressões de Exercícios</title>
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/nav.css">
+    <style>
+        .section-title {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: var(--primary-dark);
+            margin: 40px 0 25px;
+            font-size: 1.6rem;
+            font-weight: 600;
+        }
+
+        .section-title::before {
+            content: '';
+            display: block;
+            width: 8px;
+            height: 30px;
+            background: linear-gradient(to bottom, var(--accent), var(--secondary));
+            border-radius: 4px;
+        }
+
+        .workout-card {
+            background-color: var(--card-bg);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            margin-bottom: 30px;
+            transition: var(--transition);
+        }
+
+        .workout-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+        }
+
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background-color: #f5f7fa;
+            -webkit-font-smoothing: antialiased;
+            padding-bottom: 40px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        h1 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        h2 {
+            font-size: 1.5rem;
+            color: var(--primary-dark);
+            margin: 30px 0 20px;
+            border-bottom: 2px solid var(--primary);
+            padding-bottom: 8px;
+        }
+
+        h3 {
+            font-size: 1.2rem;
+            color: var(--secondary);
+            margin: 25px 0 15px;
+        }
+
+        .note-card {
+            background-color: var(--card-bg);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 25px;
+            margin-bottom: 30px;
+            transition: var(--transition);
+        }
+
+        .note-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+        }
+
+        .note-card h2 {
+            color: var(--primary);
+            margin-top: 0;
+            border-bottom: none;
+        }
+
+        .exercise-types {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .exercise-type {
+            background-color: var(--primary);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 30px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .exercise-type:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .exercise-type.active {
+            background-color: var(--accent);
+            box-shadow: 0 4px 12px rgba(247, 37, 133, 0.3);
+        }
+
+        .exercise-category {
+            margin-bottom: 40px;
+        }
+
+        .exercise-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 30px;
+            background-color: var(--card-bg);
+            box-shadow: var(--shadow);
+            border-radius: var(--radius);
+            overflow: hidden;
+        }
+
+        .exercise-table th {
+            background-color: var(--primary);
+            color: white;
+            padding: 12px 10px;
+            text-align: left;
+            font-weight: 500;
+        }
+
+        .exercise-table td {
+            padding: 12px 10px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .exercise-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .exercise-table tr:nth-child(even) {
+            background-color: #f9f9f9;
+        }
+
+        .exercise-table tr:hover td {
+            background-color: #f1f7fd;
+        }
+
+        .exercise-name {
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        .exercise-name a {
+            color: var(--primary-dark);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .exercise-name a:hover {
+            color: var(--accent);
+            text-decoration: underline;
+        }
+
+        .level-cell {
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .youtube-link {
+            color: var(--accent);
+            background: rgba(247, 37, 133, 0.1);
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            transition: var(--transition);
+            text-decoration: none;
+            margin-top: 5px;
+        }
+
+        .youtube-link:hover {
+            background: rgba(247, 37, 133, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .youtube-link i {
+            color: #ff0000;
+        }
+
+        @media (max-width: 768px) {
+            .exercise-table {
+                display: block;
+                overflow-x: auto;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="container header-content">
+            <div class="logo">
+                <div class="logo-icon">W</div>
+                <h1>Workout Plan</h1>
+            </div>
+            <nav>
+                <div class="workout-types">
+                    <a href="index.html" class="workout-type"><i class="fas fa-dumbbell"></i> Treinos</a>
+                    <a href="" class="workout-type active"><i class="fas fa-dumbbell"></i> Progressões</a>
+                    <a href="skills.html" class="workout-type"><i class="fas fa-star"></i> Skills</a>
+                    <a href="controle.html" class="workout-type"><i class="fas fa-chart-line"></i> Controle</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+
+    <main class="container">
+            <h1>Progressões de Exercícios</h1>
+        <div class="note-card">
+            <h2>IMPORTANTE</h2>
+
+            <h3 style="margin-top: 20px;">Como escolher os exercícios:</h3>
+            <p>Escolha exercícios que você consegue fazer entre 5 e 15 repetições.</p>
+            <h3 style="margin-top: 20px;">Quando mudar de exercício:</h3>
+            <p>Consegue fazer acima de 15 repetições sem perder a forma perfeita;</p>
+        </div>
+
+        <div class="exercise-types">
+            <div class="exercise-type active" data-category="all">Todos</div>
+            <div class="exercise-type" data-category="push">Push</div>
+            <div class="exercise-type" data-category="pull">Pull</div>
+            <div class="exercise-type" data-category="legs">Legs</div>
+            <div class="exercise-type" data-category="core">Core</div>
+        </div>
+
+        <!-- Push Exercises -->
+        <div class="exercise-category" data-category="push">
+            <h2>Exercícios de Push - Progressões de Empurrar</h2>
+
+            <table class="exercise-table">
+                <thead>
+                    <tr>
+                        <th>Nível</th>
+                        <th>Flexão (Push Ups) - Horizontal</th>
+                        <th>Dips - Vertical</th>
+                        <th>Dips na Argola - Vertical</th>
+                        <th>Weighted Dips - Vertical</th>
+                        <th>Flexão na Parada de Mãos - Vertical</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="level-cell">Auxiliares</td>
+                        <td class="exercise-name">
+                            Knee Push Ups (de joelho)
+                            <a href="#" class="youtube-link">
+                                <i class="fab fa-youtube"></i> Ver vídeo
+                            </a>
+                        </td>
+                        <td class="exercise-name">
+                            Bench Dips (Dips no banco)
+                            <a href="#" class="youtube-link">
+                                <i class="fab fa-youtube"></i> Ver vídeo
+                            </a>
+                        </td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                    </tr>
+                    <tr>
+                        <td class="level-cell">1</td>
+                        <td class="exercise-name">
+                            Flexões Padrão
+                            <a href="#" class="youtube-link">
+                                <i class="fab fa-youtube"></i> Ver vídeo
+                            </a>
+                        </td>
+                        <td class="exercise-name">
+                            Dips com ajuda ou elástico | Dips Negativo
+                            <a href="#" class="youtube-link">
+                                <i class="fab fa-youtube"></i> Ver vídeo
+                            </a>
+                        </td>
+                        <td class="exercise-name">
+                            Rings Support Hold
+                            <a href="#" class="youtube-link">
+                                <i class="fab fa-youtube"></i> Ver vídeo
+                            </a>
+                        </td>
+                        <td class="exercise-name">
+                            Dips com ajuda
+                            <a href="#" class="youtube-link">
+                                <i class="fab fa-youtube"></i> Ver vídeo
+                            </a>
+                        </td>
+                        <td class="exercise-name">
+                            Pike Push Ups
+                            <a href="#" class="youtube-link">
+                                <i class="fab fa-youtube"></i> Ver vídeo
+                            </a>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td class="level-cell">2</td>
+                        <td class="exercise-name">
+                            Diamond Push Ups
+                            <a href="#" class="youtube-link">
+                                <i class="fab fa-youtube"></i> Ver vídeo
+                            </a>
+                        </td>
+                        <td class="exercise-name">
+                            Dips na paralela
+                            <a href="#" class="youtube-link">
+                                <i class="fab fa-youtube"></i> Ver vídeo
+                            </a>
+                        </td>
+                        <td class="exercise-name">
+                            Rings Support Hold Supinado
+                            <a href="#" class="youtube-link">
+                                <i class="fab fa-youtube"></i> Ver vídeo
+                            </a>
+                        </td>
+                        <td>-</td>
+                        <td class="exercise-name">
+                            Elevated Pike PU
+                            <a href="#" class="youtube-link">
+                                <i class="fab fa-youtube"></i> Ver vídeo
+                            </a>
+                        </td>
+                    </tr>
+                    <!-- Continue with other levels... -->
+                </tbody>
+            </table>
+
+            <div style="margin-top: 20px;">
+                <h3>Links Adicionais</h3>
+                <a href="#" class="youtube-link" style="margin-right: 10px;">
+                    <i class="fab fa-youtube"></i> Como instalar as argolas
+                </a>
+                <a href="#" class="youtube-link">
+                    <i class="fab fa-youtube"></i> Ganhe estabilidade na argola
+                </a>
+            </div>
+        </div>
+
+        <!-- Pull Exercises -->
+        <div class="exercise-category" data-category="pull">
+            <h2>Exercícios de Pull - Progressões de Puxar</h2>
+
+            <table class="exercise-table">
+                <thead>
+                    <tr>
+                        <th>Nível</th>
+                        <th>Rows/Barra Australiana - Horizontal</th>
+                        <th>Barra Fixa (Pull Ups) - Vertical</th>
+                        <th>Chin Up (Barra Supinada)</th>
+                        <th>Weighted Pull Ups - Vertical</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="level-cell">Auxiliares</td>
+                        <td class="exercise-name">
+                            Pull Ups com ajuda ou elástico
+                            <a href="#" class="youtube-link">
+                                <i class="fab fa-youtube"></i> Ver vídeo
+                            </a>
+                        </td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                    </tr>
+                    <tr>
+                        <td class="level-cell">1</td>
+                        <td class="exercise-name">
+                            Negativas de Australiana
+                            <a href="#" class="youtube-link">
+                                <i class="fab fa-youtube"></i> Ver vídeo
+                            </a>
+                        </td>
+                        <td class="exercise-name">
+                            Pull Ups negativo
+                            <a href="#" class="youtube-link">
+                                <i class="fab fa-youtube"></i> Ver vídeo
+                            </a>
+                        </td>
+                        <td class="exercise-name">
+                            Chin Up Negativo
+                            <a href="#" class="youtube-link">
+                                <i class="fab fa-youtube"></i> Ver vídeo
+                            </a>
+                        </td>
+                        <td class="exercise-name">
+                            Pull Ups com ajuda
+                            <a href="#" class="youtube-link">
+                                <i class="fab fa-youtube"></i> Ver vídeo
+                            </a>
+                        </td>
+                    </tr>
+                    <!-- Continue with other levels... -->
+                </tbody>
+            </table>
+
+            <div style="margin-top: 20px;">
+                <a href="#" class="youtube-link">
+                    <i class="fab fa-youtube"></i> Corrigindo erro de forma na Barra
+                </a>
+            </div>
+        </div>
+
+        <!-- Legs Exercises -->
+        <div class="exercise-category" data-category="legs">
+            <h2>Exercícios de Legs - Progressões de Perna</h2>
+
+            <table class="exercise-table">
+                <thead>
+                    <tr>
+                        <th>Nível</th>
+                        <th>Squat (Push) - Parte da frente</th>
+                        <th>Hip Thruster (Pull) - Parte de trás</th>
+                        <th>Nordic Curls (Pull) - Parte de trás</th>
+                        <th>Shrimp Squat (Push) - Parte da frente</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="level-cell">Iniciantes</td>
+                        <td class="exercise-name">
+                            Squat 45º
+                            <a href="#" class="youtube-link">
+                                <i class="fab fa-youtube"></i> Ver vídeo
+                            </a>
+                        </td>
+                        <td class="exercise-name">
+                            Hip Thruster
+                            <a href="#" class="youtube-link">
+                                <i class="fab fa-youtube"></i> Ver vídeo
+                            </a>
+                        </td>
+                        <td class="exercise-name">
+                            Stiff Unilateral
+                            <a href="#" class="youtube-link">
+                                <i class="fab fa-youtube"></i> Ver vídeo
+                            </a>
+                        </td>
+                        <td>-</td>
+                    </tr>
+                    <!-- Continue with other levels... -->
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Core Exercises -->
+        <div class="exercise-category" data-category="core">
+            <h2>Exercícios de Core - Progressões de Abdômen e Lombar</h2>
+
+            <table class="exercise-table">
+                <thead>
+                    <tr>
+                        <th>Nível</th>
+                        <th>L-sit (core) - Abdômen</th>
+                        <th>Abdominal na Rodinha - Abdômen</th>
+                        <th>Toes To Bar - Abdômen</th>
+                        <th>Hiperextensão Reversa (HR) - Lombar</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="level-cell">Iniciantes</td>
+                        <td class="exercise-name">
+                            Tuck L-sit
+                            <a href="#" class="youtube-link">
+                                <i class="fab fa-youtube"></i> Ver vídeo
+                            </a>
+                        </td>
+                        <td class="exercise-name">
+                            60s de Prancha Abdominal
+                            <a href="#" class="youtube-link">
+                                <i class="fab fa-youtube"></i> Ver vídeo
+                            </a>
+                        </td>
+                        <td class="exercise-name">
+                            Elevação de Perna Encolhida no Solo
+                            <a href="#" class="youtube-link">
+                                <i class="fab fa-youtube"></i> Ver vídeo
+                            </a>
+                        </td>
+                        <td>-</td>
+                    </tr>
+                    <!-- Continue with other levels... -->
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <script>
+        // Filter exercises by category
+        const exerciseTypes = document.querySelectorAll('.exercise-type');
+        const exerciseCategories = document.querySelectorAll('.exercise-category');
+
+        exerciseTypes.forEach(type => {
+            type.addEventListener('click', () => {
+                exerciseTypes.forEach(t => t.classList.remove('active'));
+                type.classList.add('active');
+
+                const category = type.getAttribute('data-category');
+
+                exerciseCategories.forEach(cat => {
+                    if (category === 'all' || cat.getAttribute('data-category') === category) {
+                        cat.style.display = 'block';
+                    } else {
+                        cat.style.display = 'none';
+                    }
+                });
+            });
+        });
+
+        // Initialize - show all
+        exerciseCategories.forEach(cat => {
+            cat.style.display = 'block';
+        });
+    </script>
+</body>
+
+</html>

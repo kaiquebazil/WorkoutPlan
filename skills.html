@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Skills de Calistenia</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/nav.css">
+    <link rel="stylesheet" href="css/style.css">
+
+    <style>
+        
+        h1 {
+            font-size: 2.2rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        
+        h2 {
+            font-size: 1.5rem;
+            color: var(--primary-dark);
+            margin: 40px 0 20px;
+            border-bottom: 2px solid var(--primary);
+            padding-bottom: 8px;
+        }
+        
+        h3 {
+            font-size: 1.3rem;
+            color: var(--light);
+            margin: 25px 0 15px;
+        }
+        
+        .skill-categories {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        
+        .skill-category {
+            background-color: var(--primary);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 30px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+        
+        .skill-category:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+        
+        .skill-category.active {
+            background-color: var(--accent);
+            box-shadow: 0 4px 12px rgba(247, 37, 133, 0.3);
+        }
+        
+        .skill-card {
+            background-color: var(--card-bg);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            margin-bottom: 40px;
+            transition: var(--transition);
+        }
+        
+        .skill-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+        }
+        
+        .skill-header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .skill-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+        }
+        
+        .skill-difficulty {
+            background-color: rgba(255, 255, 255, 0.2);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+        }
+        
+        .skill-body {
+            padding: 25px;
+        }
+        
+        .skill-image {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+        
+        .skill-description {
+            margin-bottom: 25px;
+            color: var(--dark);
+        }
+        
+        .progressions {
+            margin-top: 25px;
+        }
+        
+        .progression-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 20px;
+            padding-bottom: 20px;
+            border-bottom: 1px dashed #eee;
+        }
+        
+        .progression-level {
+            background-color: var(--primary);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            margin-right: 15px;
+            flex-shrink: 0;
+        }
+        
+        .progression-content {
+            flex-grow: 1;
+        }
+        
+        .progression-title {
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: var(--dark);
+        }
+        
+        .progression-description {
+            color: var(--gray);
+            font-size: 0.95rem;
+        }
+        
+        .youtube-link {
+            color: var(--accent);
+            background: rgba(247, 37, 133, 0.1);
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.95rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: var(--transition);
+            text-decoration: none;
+            margin-top: 15px;
+        }
+        
+        .youtube-link:hover {
+            background: rgba(247, 37, 133, 0.2);
+            transform: translateY(-2px);
+        }
+        
+        .youtube-link i {
+            color: #ff0000;
+        }
+        
+        .tips-card {
+            background-color: #f8f9fa;
+            border-left: 4px solid var(--accent);
+            padding: 15px;
+            border-radius: 0 var(--radius) var(--radius) 0;
+            margin: 25px 0;
+        }
+        
+        .tips-title {
+            font-weight: 600;
+            color: var(--accent);
+            margin-bottom: 10px;
+        }
+        
+        @media (max-width: 768px) {
+            .skill-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+            
+            .skill-image {
+                height: 250px;
+            }
+            
+            .progression-item {
+                flex-direction: column;
+            }
+            
+            .progression-level {
+                margin-bottom: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container header-content">
+            <div class="logo">
+                <div class="logo-icon">W</div>
+                <h1>Workout Plan</h1>
+            </div>
+            <nav>
+                <div class="workout-types">
+                    <a href="index.html" class="workout-type"><i class="fas fa-dumbbell"></i> Treinos</a>
+                    <a href="progress.html" class="workout-type"><i class="fas fa-dumbbell"></i> Progressões</a>
+                    <a href="" class="workout-type active"><i class="fas fa-star"></i> Skills</a>
+                    <a href="controle.html" class="workout-type"><i class="fas fa-chart-line"></i> Controle</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+    
+    <main class="container">
+        <h1>Skills de Calistenia</h1>
+        <div class="skill-categories">
+            <div class="skill-category active" data-category="all">Todos</div>
+            <div class="skill-category" data-category="static">Estáticos</div>
+            <div class="skill-category" data-category="dynamic">Dinâmicos</div>
+            <div class="skill-category" data-category="strength">Força</div>
+        </div>
+        
+        <!-- Muscle Up -->
+        <div class="skill-card" data-category="dynamic">
+            <div class="skill-header">
+                <h3 class="skill-title">Muscle Up</h3>
+                <span class="skill-difficulty">Intermediário/Avançado</span>
+            </div>
+            <div class="skill-body">
+                <p class="skill-description">
+                    O Muscle Up é uma combinação de um pull up explosivo com uma transição para um dip. É um dos movimentos mais emblemáticos da calistenia e serve como base para muitos outros skills.
+                </p>
+                
+                <div class="tips-card">
+                    <div class="tips-title">DICA IMPORTANTE</div>
+                    <p>Foque em desenvolver um pull up explosivo antes de tentar o muscle up completo. A transição é a parte mais difícil e exige técnica específica.</p>
+                </div>
+                
+                <a href="https://www.youtube.com/watch?v=example" target="_blank" class="youtube-link">
+                    <i class="fab fa-youtube"></i> Ver tutorial completo
+                </a>
+                
+                <div class="progressions">
+                    <h3>Progressão para o Muscle Up</h3>
+                    
+                    <div class="progression-item">
+                        <div class="progression-level">1</div>
+                        <div class="progression-content">
+                            <div class="progression-title">Pull Ups e Dips Básicos</div>
+                            <p class="progression-description">Domine pelo menos 10 pull ups limpos e 15 dips antes de começar a progressão para o muscle up.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="progression-item">
+                        <div class="progression-level">2</div>
+                        <div class="progression-content">
+                            <div class="progression-title">Pull Up Explosivo</div>
+                            <p class="progression-description">Trabalhe pull ups explosivos até o peito, depois até o abdômen, e finalmente até a cintura.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="progression-item">
+                        <div class="progression-level">3</div>
+                        <div class="progression-content">
+                            <div class="progression-title">Transição Assistida</div>
+                            <p class="progression-description">Use um elástico ou banco para reduzir o peso durante a fase de transição entre o pull up e o dip.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="progression-item">
+                        <div class="progression-level">4</div>
+                        <div class="progression-content">
+                            <div class="progression-title">Muscle Up Negativo</div>
+                            <p class="progression-description">Comece na posição de dip e desça lentamente controlando todo o movimento, focando na fase de transição.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="progression-item">
+                        <div class="progression-level">5</div>
+                        <div class="progression-content">
+                            <div class="progression-title">Muscle Up Completo</div>
+                            <p class="progression-description">Combine todas as fases com um movimento fluido, mantendo o controle em todo o movimento.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Front Lever -->
+        <div class="skill-card" data-category="static">
+            <div class="skill-header">
+                <h3 class="skill-title">Front Lever</h3>
+                <span class="skill-difficulty">Avançado</span>
+            </div>
+            <div class="skill-body">
+                
+                <p class="skill-description">
+                    O Front Lever é um exercício estático avançado onde o corpo fica paralelo ao chão, suspenso por braços estendidos. Requer grande força nas costas, core e ombros.
+                </p>
+                
+                <div class="tips-card">
+                    <div class="tips-title">DICA IMPORTANTE</div>
+                    <p>Desenvolva primeiro a força de retração escapular. Muitos iniciantes pulam essa etapa e desenvolvem problemas nos ombros.</p>
+                </div>
+                
+                <a href="https://www.youtube.com/watch?v=example" target="_blank" class="youtube-link">
+                    <i class="fab fa-youtube"></i> Ver tutorial completo
+                </a>
+                
+                <div class="progressions">
+                    <h3>Progressão para o Front Lever</h3>
+                    
+                    <div class="progression-item">
+                        <div class="progression-level">1</div>
+                        <div class="progression-content">
+                            <div class="progression-title">Hang Ativo</div>
+                            <p class="progression-description">Fique pendurado na barra com os ombros ativamente engajados por 30-60 segundos.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="progression-item">
+                        <div class="progression-level">2</div>
+                        <div class="progression-content">
+                            <div class="progression-title">Tuck Front Lever</div>
+                            <p class="progression-description">Mantenha a posição com os joelhos dobrados junto ao peito por 10-20 segundos.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="progression-item">
+                        <div class="progression-level">3</div>
+                        <div class="progression-content">
+                            <div class="progression-title">Advanced Tuck Lever</div>
+                            <p class="progression-description">Estenda parcialmente as pernas, mantendo um ângulo de 90 graus nos quadris.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="progression-item">
+                        <div class="progression-level">4</div>
+                        <div class="progression-content">
+                            <div class="progression-title">Straddle Lever</div>
+                            <p class="progression-description">Execute o front lever com as pernas abertas para reduzir a alavanca.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="progression-item">
+                        <div class="progression-level">5</div>
+                        <div class="progression-content">
+                            <div class="progression-title">Front Lever Completo</div>
+                            <p class="progression-description">Mantenha a posição com as pernas totalmente estendidas e o corpo paralelo ao chão.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Handstand -->
+        <div class="skill-card" data-category="static">
+            <div class="skill-header">
+                <h3 class="skill-title">Handstand (Parada de Mãos)</h3>
+                <span class="skill-difficulty">Intermediário</span>
+            </div>
+            <div class="skill-body">
+                
+                <p class="skill-description">
+                    A parada de mãos é um dos skills mais fundamentais e versáteis da calistenia. Desenvolve força nos ombros, mobilidade e controle corporal.
+                </p>
+                
+                <div class="tips-card">
+                    <div class="tips-title">DICA IMPORTANTE</div>
+                    <p>Pratique contra a parede mas não dependa dela. Trabalhe para se afastar gradualmente da parede para desenvolver equilíbrio.</p>
+                </div>
+                
+                <a href="https://www.youtube.com/watch?v=example" target="_blank" class="youtube-link">
+                    <i class="fab fa-youtube"></i> Ver tutorial completo
+                </a>
+                
+                <div class="progressions">
+                    <h3>Progressão para o Handstand</h3>
+                    
+                    <div class="progression-item">
+                        <div class="progression-level">1</div>
+                        <div class="progression-content">
+                            <div class="progression-title">Prancha de Ombro</div>
+                            <p class="progression-description">Fique em posição de prancha com os pés elevados em um banco, focando em empurrar o chão com os ombros.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="progression-item">
+                        <div class="progression-level">2</div>
+                        <div class="progression-content">
+                            <div class="progression-title">Handstand na Parede</div>
+                            <p class="progression-description">Fique de costas para a parede e suba para a posição de handstand, mantendo por 15-30 segundos.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="progression-item">
+                        <div class="progression-level">3</div>
+                        <div class="progression-content">
+                            <div class="progression-title">Handstand com Apoio</div>
+                            <p class="progression-description">Pratique kick-ups (subidas dinâmicas) com um parceiro segurando seus pés.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="progression-item">
+                        <div class="progression-level">4</div>
+                        <div class="progression-content">
+                            <div class="progression-title">Handstand Livre</div>
+                            <p class="progression-description">Execute kick-ups e mantenha o equilíbrio por alguns segundos sem apoio.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="progression-item">
+                        <div class="progression-level">5</div>
+                        <div class="progression-content">
+                            <div class="progression-title">Handstand Consistente</div>
+                            <p class="progression-description">Mantenha a posição por 30+ segundos com boa forma e controle total.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Planche -->
+        <div class="skill-card" data-category="static strength">
+            <div class="skill-header">
+                <h3 class="skill-title">Planche</h3>
+                <span class="skill-difficulty">Avançado/Expert</span>
+            </div>
+            <div class="skill-body">
+                
+                <p class="skill-description">
+                    O planche é um dos skills mais avançados da calistenia, exigindo força extrema nos ombros, core e tendões. O corpo fica paralelo ao chão, suspenso apenas pelas mãos.
+                </p>
+                
+                <div class="tips-card">
+                    <div class="tips-title">DICA IMPORTANTE</div>
+                    <p>Desenvolva progressivamente a força de protração escapular. O planche exige que os ombros estejam empurrando ativamente para frente.</p>
+                </div>
+                
+                <a href="https://www.youtube.com/watch?v=example" target="_blank" class="youtube-link">
+                    <i class="fab fa-youtube"></i> Ver tutorial completo
+                </a>
+                
+                <div class="progressions">
+                    <h3>Progressão para o Planche</h3>
+                    
+                    <div class="progression-item">
+                        <div class="progression-level">1</div>
+                        <div class="progression-content">
+                            <div class="progression-title">Planche Lean</div>
+                            <p class="progression-description">Em posição de push up, incline-se para frente mantendo os braços retos, transferindo peso para os ombros.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="progression-item">
+                        <div class="progression-level">2</div>
+                        <div class="progression-content">
+                            <div class="progression-title">Tuck Planche</div>
+                            <p class="progression-description">Com os joelhos dobrados junto ao peito, mantenha a posição com os braços estendidos.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="progression-item">
+                        <div class="progression-level">3</div>
+                        <div class="progression-content">
+                            <div class="progression-title">Advanced Tuck</div>
+                            <p class="progression-description">Estenda parcialmente as pernas, mantendo um ângulo de 90 graus nos quadris.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="progression-item">
+                        <div class="progression-level">4</div>
+                        <div class="progression-content">
+                            <div class="progression-title">Straddle Planche</div>
+                            <p class="progression-description">Execute o planche com as pernas abertas para reduzir a alavanca.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="progression-item">
+                        <div class="progression-level">5</div>
+                        <div class="progression-content">
+                            <div class="progression-title">Full Planche</div>
+                            <p class="progression-description">Mantenha a posição com as pernas totalmente estendidas e juntas, corpo paralelo ao chão.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <h2 class="section-title">Skills - Habilidades Avançadas</h2>
+        <div class="workout-card">
+            <div class="card-header">
+                <span>Movimentos de Ginástica</span>
+                <span class="tag">Nível avançado</span>
+            </div>
+            <div class="card-body">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Habilidade</th>
+                            <th>Progressão</th>
+                            <th>Dificuldade</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="exercise-name">
+                                <span>Mobilidade Técnica</span>
+                                <a href="https://www.youtube.com/results?search_query=Mobility+exercises" target="_blank" class="youtube-link">
+                                    <i class="fab fa-youtube"></i> Ver
+                                </a>
+                            </td>
+                            <td class="empty-cell">A definir</td>
+                            <td class="empty-cell">-</td>
+                        </tr>
+                        <tr>
+                            <td class="exercise-name">
+                                <span>Muscle-Up</span>
+                                <a href="https://www.youtube.com/results?search_query=Muscle-Up+tutorial" target="_blank" class="youtube-link">
+                                    <i class="fab fa-youtube"></i> Ver
+                                </a>
+                            </td>
+                            <td class="empty-cell">A definir</td>
+                            <td><span class="tag">Avançado</span></td>
+                        </tr>
+                        <tr>
+                            <td class="exercise-name">
+                                <span>Handstand</span>
+                                <a href="https://www.youtube.com/results?search_query=Handstand+progression" target="_blank" class="youtube-link">
+                                    <i class="fab fa-youtube"></i> Ver
+                                </a>
+                            </td>
+                            <td class="empty-cell">A definir</td>
+                            <td><span class="tag">Intermediário</span></td>
+                        </tr>
+                        <tr>
+                            <td class="exercise-name">
+                                <span>Front Lever</span>
+                                <a href="https://www.youtube.com/results?search_query=Front+Lever+training" target="_blank" class="youtube-link">
+                                    <i class="fab fa-youtube"></i> Ver
+                                </a>
+                            </td>
+                            <td class="empty-cell">A definir</td>
+                            <td><span class="tag">Avançado</span></td>
+                        </tr>
+                        <tr>
+                            <td class="exercise-name">
+                                <span>L-Sit</span>
+                                <a href="https://www.youtube.com/results?search_query=L-Sit+progression" target="_blank" class="youtube-link">
+                                    <i class="fab fa-youtube"></i> Ver
+                                </a>
+                            </td>
+                            <td class="empty-cell">A definir</td>
+                            <td><span class="tag">Intermediário</span></td>
+                        </tr>
+                        <tr>
+                            <td class="exercise-name">
+                                <span>Dragon Flag</span>
+                                <a href="https://www.youtube.com/results?search_query=Dragon+Flag+exercise" target="_blank" class="youtube-link">
+                                    <i class="fab fa-youtube"></i> Ver
+                                </a>
+                            </td>
+                            <td class="empty-cell">A definir</td>
+                            <td><span class="tag">Avançado</span></td>
+                        </tr>
+                        <tr>
+                            <td class="exercise-name">
+                                <span>Human Flag</span>
+                                <a href="https://www.youtube.com/results?search_query=Human+Flag+tutorial" target="_blank" class="youtube-link">
+                                    <i class="fab fa-youtube"></i> Ver
+                                </a>
+                            </td>
+                            <td class="empty-cell">A definir</td>
+                            <td><span class="tag">Expert</span></td>
+                        </tr>
+                        <tr>
+                            <td class="exercise-name">
+                                <span>AMRAP Test</span>
+                                <a href="https://www.youtube.com/results?search_query=AMRAP+workout" target="_blank" class="youtube-link">
+                                    <i class="fab fa-youtube"></i> Ver
+                                </a>
+                            </td>
+                            <td class="empty-cell">A definir</td>
+                            <td class="empty-cell">-</td>
+                        </tr>
+                        <tr>
+                            <td class="exercise-name">
+                                <span>GIG</span>
+                                <a href="https://www.youtube.com/results?search_query=GIG+workout" target="_blank" class="youtube-link">
+                                    <i class="fab fa-youtube"></i> Ver
+                                </a>
+                            </td>
+                            <td class="empty-cell">A definir</td>
+                            <td class="empty-cell">-</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // Filter skills by category
+        const skillCategories = document.querySelectorAll('.skill-category');
+        const skillCards = document.querySelectorAll('.skill-card');
+        
+        skillCategories.forEach(category => {
+            category.addEventListener('click', () => {
+                skillCategories.forEach(c => c.classList.remove('active'));
+                category.classList.add('active');
+                
+                const selectedCategory = category.getAttribute('data-category');
+                
+                skillCards.forEach(card => {
+                    const cardCategories = card.getAttribute('data-category').split(' ');
+                    
+                    if (selectedCategory === 'all' || cardCategories.includes(selectedCategory)) {
+                        card.style.display = 'block';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

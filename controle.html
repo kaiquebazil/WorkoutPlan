@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Controle de Treinamento Interativo</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+   <header>
+        <div class="container header-content">
+            <div class="logo">
+                <div class="logo-icon">W</div>
+                <h1>Workout Plan</h1>
+            </div>
+            <nav>
+                <div class="workout-types">
+                    <a href="index.html" class="workout-type"><i class="fas fa-dumbbell"></i> Treinos</a>
+                    <a href="progress.html" class="workout-type"><i class="fas fa-dumbbell"></i> Progressões</a>
+                    <a href="skills.html" class="workout-type"><i class="fas fa-star"></i> Skills</a>
+                    <a href="" class="workout-type active"><i class="fas fa-chart-line"></i> Controle</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+    
+    <main class="container">
+        <h1>Planilha de Controle de Resultados e Treinamento</h1>
+        <section>
+            <h2>INFORMAÇÕES BÁSICAS DO ATLETA</h2>
+            <div class="dashboard">
+                <div class="card">
+                    <div class="info-grid">
+                        <div class="info-item">
+                            <div class="info-label">NOME COMPLETO</div>
+                            <div class="info-value editable" data-field="name">Kaique Bazil</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">GÊNERO</div>
+                            <div class="info-value editable" data-field="gender">Masculino</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">IDADE</div>
+                            <div class="info-value editable" data-field="age">20</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">PESO (KG)</div>
+                            <div class="info-value editable" data-field="weight">65,3</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">ALTURA (m)</div>
+                            <div class="info-value editable" data-field="height">1,73</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">IMC ATUAL</div>
+                            <div class="info-value" id="bmi-value">21,8</div>
+                        </div>
+                        <div class="info-item">
+                            <div class="info-label">CLASSIFICAÇÃO</div>
+                            <div class="info-value" id="bmi-classification">Peso normal</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="goal-card">
+                    <h3>PRINCIPAIS OBJETIVOS COM O TREINAMENTO</h3>
+                    <div class="info-value editable" data-field="goal">GANHAR FORÇA</div>
+                    
+                    <div style="margin-top: 30px;">
+                        <div class="goal-label">META (KG)</div>
+                        <div class="goal-value editable" data-field="goal-weight">70,0</div>
+                        <div class="goal-label">IMC PROPOSTO</div>
+                        <div class="goal-value editable" data-field="goal-bmi">23,4</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="controls">
+                <button class="save-btn" id="save-athlete-data">
+                    <i class="fas fa-save"></i> Salvar Dados
+                </button>
+                <button id="reset-athlete-data">
+                    <i class="fas fa-undo"></i> Resetar
+                </button>
+            </div>
+        </section>
+        
+        <section>
+            <h2>PLANEJAMENTO DO CICLO DE TREINAMENTO</h2>
+            <div class="card">
+                <div class="controls">
+                    <div class="control-group">
+                        <label for="start-date">Data de Início:</label>
+                        <input type="date" id="start-date" value="2024-05-21">
+                    </div>
+                    <div class="control-group">
+                        <label for="training-focus">Foco do Treino:</label>
+                        <select id="training-focus">
+                            <option value="strength">Força</option>
+                            <option value="hypertrophy">Hipertrofia</option>
+                            <option value="endurance">Resistência</option>
+                        </select>
+                    </div>
+                    <button id="update-schedule">Atualizar Cronograma</button>
+                    <button id="save-data">Salvar Dados</button>
+                    <button id="reset-data">Resetar</button>
+                </div>
+                <div class="info-grid">
+                    <div class="info-item">
+                        <div class="info-label">INÍCIO</div>
+                        <div class="info-value" id="display-start-date">17/12/24</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">TÉRMINO</div>
+                        <div class="info-value" id="display-end-date">16/03/25</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">DURAÇÃO</div>
+                        <div class="info-value" id="display-duration">3 meses</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section>
+            <h2>CRONOGRAMA DE TREINOS SEMANAIS</h2>
+            
+            <div id="schedule-container">
+                <!-- Weeks will be generated here by JavaScript -->
+            </div>
+            
+        </section>
+        
+        <div class="note">
+            <p><strong>ÍNDICE DE MASSA CORPORAL (IMC)*</strong></p>
+            <p>IMC é apenas uma referência de peso recomendado para cada indivíduo. Indicado para sedentários ou iniciantes de atividade física. Não recomendado para atletas ou praticantes avançados, por não distinguir massa magra de massa gorda.</p>
+        </div>
+    </main>
+
+    <script>
+        
+// DOM Elements
+        const saveBtn1 = document.getElementById('save-athlete-data');
+        const resetBtn1 = document.getElementById('reset-athlete-data');
+        const bmiValue = document.getElementById('bmi-value');
+        const bmiClassification = document.getElementById('bmi-classification');
+        
+        // Athlete data model
+        let athleteData = {
+            name: "Kaique Bazil",
+            gender: "Masculino",
+            age: "20",
+            weight: "65,3",
+            height: "1,73",
+            goal: "GANHAR FORÇA",
+            goalWeight: "70,0",
+            goalBmi: "23,4"
+        };
+        
+        // Initialize the app
+        document.addEventListener('DOMContentLoaded', () => {
+            loadAthleteData();
+            setupEditableFields();
+            calculateBMI();
+        });
+        
+        // Event listeners
+        saveBtn1.addEventListener('click', saveAthleteData);
+        resetBtn1.addEventListener('click', resetAthleteData);
+        
+        // Functions
+        function loadAthleteData() {
+            const savedData = localStorage.getItem('athleteData');
+            if (savedData) {
+                athleteData = JSON.parse(savedData);
+                updateAllFields();
+            }
+        }
+        
+        function saveAthleteData() {
+            localStorage.setItem('athleteData', JSON.stringify(athleteData));
+            showNotification('Dados salvos com sucesso!');
+        }
+        
+        function resetAthleteData() {
+            if (confirm('Tem certeza que deseja resetar todos os dados do atleta?')) {
+                localStorage.removeItem('athleteData');
+                athleteData = {
+                    name: "Kaique Bazil",
+                    gender: "Masculino",
+                    age: "20",
+                    weight: "65,3",
+                    height: "1,73",
+                    goal: "GANHAR FORÇA",
+                    goalWeight: "70,0",
+                    goalBmi: "23,4"
+                };
+                updateAllFields();
+                showNotification('Dados resetados com sucesso!');
+            }
+        }
+        
+        function setupEditableFields() {
+            const editableElements = document.querySelectorAll('.editable');
+            
+            editableElements.forEach(element => {
+                element.addEventListener('click', function() {
+                    const field = this.getAttribute('data-field');
+                    const currentValue = this.textContent;
+                    
+                    // Create input element
+                    const input = document.createElement('input');
+                    input.type = 'text';
+                    input.value = currentValue;
+                    input.className = 'edit-input';
+                    
+                    // Replace text with input
+                    this.innerHTML = '';
+                    this.appendChild(input);
+                    this.classList.add('editing');
+                    input.focus();
+                    
+                    // Handle save on blur or enter
+                    input.addEventListener('blur', () => saveEdit(this, field, input));
+                    input.addEventListener('keypress', (e) => {
+                        if (e.key === 'Enter') {
+                            saveEdit(this, field, input);
+                        }
+                    });
+                });
+            });
+        }
+        
+        function saveEdit(element, field, input) {
+            const newValue = input.value.trim();
+            
+            // Update data model
+            if (field === 'goal-weight') {
+                athleteData.goalWeight = newValue;
+            } else if (field === 'goal-bmi') {
+                athleteData.goalBmi = newValue;
+            } else {
+                athleteData[field] = newValue;
+            }
+            
+            // Update display
+            element.textContent = newValue;
+            element.classList.remove('editing');
+            
+            // Recalculate BMI if weight or height changed
+            if (field === 'weight' || field === 'height') {
+                calculateBMI();
+            }
+        }
+        
+        function calculateBMI() {
+            const weight = parseFloat(athleteData.weight.replace(',', '.'));
+            const height = parseFloat(athleteData.height.replace(',', '.'));
+            
+            if (weight && height) {
+                const bmi = (weight / (height * height)).toFixed(1);
+                bmiValue.textContent = bmi;
+                
+                // Classify BMI
+                let classification = '';
+                if (bmi < 18.5) classification = 'Abaixo do peso';
+                else if (bmi < 25) classification = 'Peso normal';
+                else if (bmi < 30) classification = 'Sobrepeso';
+                else if (bmi < 35) classification = 'Obesidade grau I';
+                else if (bmi < 40) classification = 'Obesidade grau II';
+                else classification = 'Obesidade grau III';
+                
+                bmiClassification.textContent = classification;
+            }
+        }
+        
+        function updateAllFields() {
+            document.querySelector('[data-field="name"]').textContent = athleteData.name;
+            document.querySelector('[data-field="gender"]').textContent = athleteData.gender;
+            document.querySelector('[data-field="age"]').textContent = athleteData.age;
+            document.querySelector('[data-field="weight"]').textContent = athleteData.weight;
+            document.querySelector('[data-field="height"]').textContent = athleteData.height;
+            document.querySelector('[data-field="goal"]').textContent = athleteData.goal;
+            document.querySelector('[data-field="goal-weight"]').textContent = athleteData.goalWeight;
+            document.querySelector('[data-field="goal-bmi"]').textContent = athleteData.goalBmi;
+            
+            calculateBMI();
+        }
+        
+        function showNotification(message) {
+            const notification = document.createElement('div');
+            notification.style.position = 'fixed';
+            notification.style.bottom = '20px';
+            notification.style.right = '20px';
+            notification.style.backgroundColor = 'var(--primary)';
+            notification.style.color = 'white';
+            notification.style.padding = '10px 20px';
+            notification.style.borderRadius = '4px';
+            notification.style.boxShadow = '0 2px 10px rgba(0,0,0,0.2)';
+            notification.style.zIndex = '1000';
+            notification.style.animation = 'fadeIn 0.3s ease-out';
+            notification.textContent = message;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.animation = 'fadeOut 0.3s ease-out';
+                setTimeout(() => notification.remove(), 300);
+            }, 3000);
+        }
+        
+        // Add styles for animations
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes fadeIn {
+                from { opacity: 0; transform: translateY(10px); }
+                to { opacity: 1; transform: translateY(0); }
+            }
+            @keyframes fadeOut {
+                from { opacity: 1; transform: translateY(0); }
+                to { opacity: 0; transform: translateY(10px); }
+            }
+            .edit-input {
+                width: 100%;
+                padding: 4px;
+                border: 1px solid var(--primary);
+                border-radius: 4px;
+                font-family: 'Poppins', sans-serif;
+                font-size: 1.1rem;
+            }
+        `;
+        document.head.appendChild(style);
+
+        // DOM Elements
+        const startDateInput = document.getElementById('start-date');
+        const updateBtn = document.getElementById('update-schedule');
+        const saveBtn = document.getElementById('save-data');
+        const resetBtn = document.getElementById('reset-data');
+        const scheduleContainer = document.getElementById('schedule-container');
+        const displayStartDate = document.getElementById('display-start-date');
+        const displayEndDate = document.getElementById('display-end-date');
+        const displayDuration = document.getElementById('display-duration');
+        
+        // Training data
+        let trainingData = {
+            startDate: new Date('2024-12-17'),
+            weeks: []
+        };
+        
+        // Initialize the app
+        document.addEventListener('DOMContentLoaded', () => {
+            loadData();
+            updateScheduleDisplay();
+            generateSchedule();
+        });
+        
+        // Event listeners
+        updateBtn.addEventListener('click', updateSchedule);
+        saveBtn.addEventListener('click', saveData);
+        resetBtn.addEventListener('click', resetData);
+        
+        // Functions
+        function loadData() {
+            const savedData = localStorage.getItem('trainingSchedule');
+            if (savedData) {
+                trainingData = JSON.parse(savedData);
+                trainingData.startDate = new Date(trainingData.startDate);
+                startDateInput.value = formatDateForInput(trainingData.startDate);
+            }
+        }
+        
+        function saveData() {
+            localStorage.setItem('trainingSchedule', JSON.stringify(trainingData));
+            alert('Dados salvos com sucesso!');
+        }
+        
+        function resetData() {
+            if (confirm('Tem certeza que deseja resetar todos os dados?')) {
+                localStorage.removeItem('trainingSchedule');
+                trainingData = {
+                    startDate: new Date(startDateInput.value),
+                    weeks: []
+                };
+                generateSchedule();
+            }
+        }
+        
+        function updateSchedule() {
+            trainingData.startDate = new Date(startDateInput.value);
+            updateScheduleDisplay();
+            generateSchedule();
+        }
+        
+        function updateScheduleDisplay() {
+            const startDate = trainingData.startDate;
+            const endDate = new Date(startDate);
+            endDate.setMonth(endDate.getMonth() + 3);
+            
+            displayStartDate.textContent = formatDate(startDate);
+            displayEndDate.textContent = formatDate(endDate);
+            displayDuration.textContent = '3 meses';
+        }
+        
+        function generateSchedule() {
+            scheduleContainer.innerHTML = '';
+            trainingData.weeks = [];
+            
+            const startDate = new Date(trainingData.startDate);
+            let currentWeekStart = new Date(startDate);
+            
+            // Adjust to start on Monday (if needed)
+            if (currentWeekStart.getDay() !== 1) {
+                const diff = currentWeekStart.getDay() === 0 ? 1 : (8 - currentWeekStart.getDay());
+                currentWeekStart.setDate(currentWeekStart.getDate() + diff);
+            }
+            
+            for (let weekNum = 1; weekNum <= 14; weekNum++) {
+                const week = {
+                    number: weekNum,
+                    days: [],
+                    workouts: []
+                };
+                
+                // Generate week dates
+                const weekDates = [];
+                for (let i = 0; i < 7; i++) {
+                    const date = new Date(currentWeekStart);
+                    date.setDate(date.getDate() + i);
+                    weekDates.push(date);
+                }
+                
+                // Generate alternating workouts
+                const workouts = generateWorkoutsForWeek(weekNum);
+                
+                // Add week to data
+                week.days = weekDates;
+                week.workouts = workouts;
+                trainingData.weeks.push(week);
+                
+                // Create week table
+                const weekTable = document.createElement('table');
+                weekTable.className = 'week-table';
+                
+                // Table header
+                const headerRow = document.createElement('tr');
+                ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'].forEach(text => {
+                    const th = document.createElement('th');
+                    th.textContent = text;
+                    headerRow.appendChild(th);
+                });
+                weekTable.appendChild(headerRow);
+                
+                // Dates row
+                const datesRow = document.createElement('tr');
+                weekDates.forEach(date => {
+                    const td = document.createElement('td');
+                    td.textContent = formatDate(date);
+                    datesRow.appendChild(td);
+                });
+                
+                // Workout days row
+                const workoutDaysRow = document.createElement('tr');
+                workouts.forEach((workout, i) => {
+                    const td = document.createElement('td');
+                    
+                    if (workout === 'Rest') {
+                        td.textContent = 'Descanso';
+                        td.className = 'rest-day';
+                    } else {
+                        td.textContent = workout;
+                        td.className = `workout-${workout.toLowerCase()}`;
+                    }
+                    
+                    // Make workout cells editable
+                    td.contentEditable = false;
+                    td.addEventListener('blur', () => {
+                        trainingData.weeks[weekNum-1].workouts[i] = td.textContent;
+                    });
+                    
+                    workoutDaysRow.appendChild(td);
+                });
+                
+                weekTable.appendChild(workoutDaysRow);
+                
+                // Week title and append
+                const weekTitle = document.createElement('h3');
+                weekTitle.textContent = `Semana ${weekNum} (${formatDate(weekDates[0])} - ${formatDate(weekDates[6])})`;
+                scheduleContainer.appendChild(weekTitle);
+                scheduleContainer.appendChild(weekTable);
+                
+                // Move to next week
+                currentWeekStart.setDate(currentWeekStart.getDate() + 7);
+            }
+        }
+        
+        function generateWorkoutsForWeek(weekNum) {
+            const workouts = [];
+            const workoutTypes = ['A', 'B', 'C'];
+            
+            // Alternate between workout types each week
+            const baseIndex = (weekNum - 1) % 3;
+            
+            // Typical week pattern: Mon-Wed-Fri workouts
+            for (let i = 0; i < 7; i++) {
+                if (i === 1 || i === 3 || i === 5) { // Monday, Wednesday, Friday
+                    const workoutType = workoutTypes[(baseIndex + Math.floor(i/2)) % 3];
+                    workouts.push(`Treino ${workoutType}`);
+                } else {
+                    workouts.push('Rest');
+                }
+            }
+            
+            return workouts;
+        }
+        
+        function formatDate(date) {
+            const day = date.getDate().toString().padStart(2, '0');
+            const month = (date.getMonth() + 1).toString().padStart(2, '0');
+            const year = date.getFullYear().toString().slice(-2);
+            return `${day}/${month}/${year}`;
+        }
+        
+        function formatDateForInput(date) {
+            const year = date.getFullYear();
+            const month = (date.getMonth() + 1).toString().padStart(2, '0');
+            const day = date.getDate().toString().padStart(2, '0');
+            return `${year}-${month}-${day}`;
+        }
+    </script>
+</body>
+</html>
